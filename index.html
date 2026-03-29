@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JASMUN — September 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    @keyframes shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    :root { --border: rgba(255,255,255,0.14); }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #2a0850, #5a16a0, #9a3da0, #a83890, #6a1570, #2a0850, #5a16a0);
+      background-size: 400% 400%;
+      animation: shift 26s ease infinite;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .brand-font {
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-base {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+    }
+    .nav-scrolled {
+      background: rgba(30,5,55,0.35) !important;
+      backdrop-filter: blur(20px) !important;
+      -webkit-backdrop-filter: blur(20px) !important;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.32) !important;
+      border-color: rgba(255,255,255,0.18) !important;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+    .glass:hover {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,0.10);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.36), 0 0 40px rgba(191,36,149,0.18);
+    }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -0.45rem;
+      width: 0; height: 2px;
+      background: linear-gradient(90deg, #ffffff, #f0abfc);
+      transition: width 0.25s ease;
+    }
+    .nav-link:hover::after, .nav-link:focus-visible::after { width: 100%; }
+
+    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .mobile-menu.open { max-height: 520px; }
+
+    .accent-text {
+      background: linear-gradient(135deg, #ffffff 0%, #f5d0fe 45%, #d8b4fe 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .soft-pill {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .grid-fade {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+      -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+    }
+
+    .hero-pill  { animation: fadeIn 0.8s ease both; animation-delay: 0.1s; }
+    .hero-title { animation: fadeUp 0.9s ease both; animation-delay: 0.3s; line-height: 0.92; }
+    .hero-sub   { animation: fadeUp 0.9s ease both; animation-delay: 0.5s; }
+    .hero-desc  { animation: fadeUp 0.9s ease both; animation-delay: 0.65s; }
+    .hero-btns  { animation: fadeUp 0.9s ease both; animation-delay: 0.8s; }
+    .hero-count { animation: fadeUp 0.9s ease both; animation-delay: 1s; }
+
+    .countdown-box {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(12px);
+      border-radius: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      min-width: 80px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .countdown-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(191,36,149,0.25);
+    }
+    .countdown-num {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #ffffff, #f5d0fe);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1;
+    }
+    .countdown-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.4rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    
+    .card-detail {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.45s ease, opacity 0.35s ease;
+    }
+    .card-detail.open {
+      max-height: 600px;
+      opacity: 1;
+    }
+    .read-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.2s ease;
+    }
+    .read-more-btn:hover { color: rgba(255,255,255,0.85); }
+    .read-more-btn .arrow {
+      display: inline-block;
+      font-size: 0.6rem;
+      transition: transform 0.3s ease;
+    }
+    .read-more-btn.open .arrow { transform: rotate(180deg); }
+  </style>
+</head>
+<body>
+  <div class="fixed inset-0 grid-fade opacity-50 pointer-events-none"></div>
+
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+      <nav id="navbar" class="nav-base rounded-2xl px-5 sm:px-7 py-4">
+        <div class="flex items-center justify-between gap-6">
+          <a href="#home" class="brand-font text-2xl sm:text-3xl font-bold text-white tracking-[0.22em]">JASMUN</a>
+          <button id="menuButton" class="md:hidden inline-flex items-center justify-center rounded-xl border border-white/15 px-3 py-2 text-white hover:bg-white/10 transition" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileMenu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <div class="hidden md:flex items-center gap-6 text-sm font-medium text-white/85">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#whats" class="nav-link">What's MUN?</a>
+            <a href="#why" class="nav-link">Why JASMUN</a>
+            <a href="#details" class="nav-link">Conference Details</a>
+            <a href="#secretariat" class="nav-link">Secretariat Members</a>
+            <a href="#delegates" class="nav-link">For Delegates</a>
+            <a href="#previous-editions" class="nav-link">Previous Editions</a>
+            <a href="#contact" class="nav-link">Contact</a>
+          </div>
+        </div>
+        <div id="mobileMenu" class="mobile-menu md:hidden">
+          <div class="pt-5 flex flex-col gap-4 text-base text-white/90">
+            <a href="#home" class="py-1">Home</a>
+            <a href="#whats" class="py-1">What's MUN?</a>
+            <a href="#why" class="py-1">Why JASMUN</a>
+            <a href="#details" class="py-1">Conference Details</a>
+            <a href="#secretariat" class="py-1">Secretariat Members</a>
+            <a href="#delegates" class="py-1">For Delegates</a>
+            <a href="#previous-editions" class="py-1">Previous Editions</a>
+            <a href="#contact" class="py-1">Contact</a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="min-h-screen flex items-center pt-32 sm:pt-36 pb-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="flex flex-col items-center text-center gap-6">
+          <div class="hero-pill inline-flex items-center gap-3 soft-pill rounded-full px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.28em] text-white/80">
+            <span class="w-2 h-2 rounded-full bg-fuchsia-300"></span>
+            Model United Nations · Warsaw
+          </div>
+          <h1 class="hero-title text-[5rem] sm:text-[9rem] lg:text-[13rem] font-extrabold accent-text">JASMUN</h1>
+          <p class="hero-sub text-lg sm:text-2xl text-white/70 tracking-[0.22em] uppercase -mt-2">September 24–27, 2026</p>
+          <p class="hero-desc max-w-2xl text-base sm:text-lg leading-8 text-white/65 mt-2">
+            A THIMUN-inspired conference for students who want debate, diplomacy, and a memorable conference atmosphere.
+          </p>
+          <div class="hero-btns flex flex-col sm:flex-row gap-4 mt-4">
+            <a href="#details" class="inline-flex items-center justify-center rounded-full bg-white text-purple-900 px-8 py-3.5 font-semibold shadow-lg shadow-fuchsia-950/30 hover:-translate-y-0.5 transition">Explore the Conference</a>
+            <a href="#delegates" class="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 py-3.5 font-semibold text-white hover:bg-white/10 transition">For Delegates</a>
+          </div>
+          <div class="hero-count mt-12 flex flex-col items-center gap-4">
+            <p class="text-xs uppercase tracking-[0.28em] text-white/45">Conference begins in</p>
+            <div class="flex gap-3 sm:gap-5">
+              <div class="countdown-box"><div class="countdown-num" id="cd-days">--</div><div class="countdown-label">Days</div></div>
+              <div class="countdown-box"><div class="countdown-num" id="cd-hours">--</div><div class="countdown-label">Hours</div></div>
+              <div class="countdown-box"><div class="countdown-num" id="cd-mins">--</div><div class="countdown-label">Minutes</div></div>
+              <div class="countdown-box"><div class="countdown-num" id="cd-secs">--</div><div class="countdown-label">Seconds</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="whats" class="py-20 sm:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-8 items-start reveal">
+          <div>
+            <h2 class="mt-4 text-4xl sm:text-6xl font-bold text-white">What's MUN?</h2>
+          </div>
+          <div class="glass rounded-[2rem] p-8">
+            <p class="text-white/75 leading-8 text-base sm:text-lg">
+              Model United Nations, MUN, is a simulation of real-life proceedings of the United Nations. Participants get to
+              represent countries from around the globe as their respective delegates or ambassadors in one of the numerous
+              United Nations or UN affiliated committees. Each committee at the end of its sessions produces a resolution, a
+              document containing solutions suggested to the global issues discussed. The resolutions are then read out and
+              discussed during the General Assembly comprising of all delegations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="py-20 sm:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-10 reveal">
+          <h2 class="mt-4 text-4xl sm:text-6xl font-bold text-white">Why JASMUN?</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+
+          <article class="glass rounded-[1.75rem] p-7 reveal">
+            <p class="text-xs uppercase tracking-[0.24em] text-white/55">01</p>
+            <h3 class="mt-4 text-2xl font-semibold text-white">Strong Academics</h3>
+            <p class="mt-4 text-white/72 leading-7">At JASMUN, we focus on creating meaningful and engaging academic experiences.
+               We want delegates to do more than just debate and really focus on learning, thinking critically, and growing throughout the conference.</p>
+            <button class="read-more-btn" onclick="toggleCard(this)">
+              Read more <span class="arrow">▼</span>
+            </button>
+            <div class="card-detail">
+              <p class="mt-3 text-white/60 leading-7 text-sm">Each committee explores two topics that are linked by a clear central theme.
+              Debates are led by experienced chairs who are there to guide discussions and support delegates.
+               This years theme is "The Rise of Emerging Global Powers". It explores how rapidly developing countries are gaining influence in international politics and economics.
+                Before, global power had been dominated by chosen states. However, in recent decades, emerging powers, which are countries with growing economies, political influence,
+                 and regional leadership, have begun to reshape the international system.</p>
+            </div>
+          </article>
+
+          <article class="glass rounded-[1.75rem] p-7 reveal">
+            <p class="text-xs uppercase tracking-[0.24em] text-white/55">02</p>
+            <h3 class="mt-4 text-2xl font-semibold text-white">International Environment</h3>
+            <p class="mt-4 text-white/72 leading-7">JASMUN brings together delegates from around the world and creates a diverse and open environment for comfortable discussions.</p>
+            <button class="read-more-btn" onclick="toggleCard(this)">
+              Read more <span class="arrow">▼</span>
+            </button>
+            <div class="card-detail">
+              <p class="mt-3 text-white/60 leading-7 text-sm">You as a delegate will have the opportunity to meet people from different countries, exchange perspectives and work with them to develop solutions to significant issues.
+               JASMUN builds friendships and connections that last even after the conference ends!</p>
+            </div>
+          </article>
+
+          <article class="glass rounded-[1.75rem] p-7 reveal">
+            <p class="text-xs uppercase tracking-[0.24em] text-white/55">03</p>
+            <h3 class="mt-4 text-2xl font-semibold text-white">New RoP</h3>
+            <p class="mt-4 text-white/72 leading-7">This years JASMUN Rules of Procedure, is fully inspired the THIMUN ROP, providing a fresh take on the traditional MUN experience in the Polish MUN community.</p>
+            <button class="read-more-btn" onclick="toggleCard(this)">
+              Read more <span class="arrow">▼</span>
+            </button>
+            <div class="card-detail">
+              <p class="mt-3 text-white/60 leading-7 text-sm">This new RoP offers a more accessible and engaging approach to Model United Nations,
+               that is beginner friendly. Instead of defending their position from the start, delegates work in groups to develop ideas
+                and build draft resolutions together, making it easier to feel the comfortable atmosphere and make MUN experience less intimidating.</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="secretariat" class="py-20 sm:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-10 reveal">
+          <h2 class="mt-4 text-4xl sm:text-6xl font-bold text-white">Secretariat Members</h2>
+        </div>
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Maja Dobrosielska</h3><p class="mt-2 text-white/65">Secretary General</p></article>
+          <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Sonia Rybus</h3><p class="mt-2 text-white/65">Conference Manager</p></article>
+           <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Kalina Krupa</h3><p class="mt-2 text-white/65">President of the General Assembly</p></article>
+          <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Marcjanna Bubak</h3><p class="mt-2 text-white/65">Head of Academics</p></article>
+          <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Matvei Pikula</h3><p class="mt-2 text-white/65">Head of Finance</p></article>
+          <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Karolina Orfinger</h3><p class="mt-2 text-white/65">Head of Logistics</p></article>
+          <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Juliusz Wertenstein Żuławski</h3><p class="mt-2 text-white/65">Head of PR</p></article>
+           <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Gustaw Kuczyński</h3><p class="mt-2 text-white/65">Head of The Delegate Center</p></article>
+          <article class="glass rounded-[1.75rem] p-6 text-center reveal"><div class="w-28 h-28 mx-auto rounded-full border border-white/15 bg-white/10 flex items-center justify-center text-white/45">Coming soon</div><h3 class="mt-5 text-xl font-semibold text-white">Michał Młyniec</h3><p class="mt-2 text-white/65">President of Crisis</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="delegates" class="py-20 sm:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-10 reveal">
+          <h2 class="mt-4 text-4xl sm:text-6xl font-bold text-white">For Delegates</h2>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <article class="glass rounded-[1.75rem] p-7 reveal">
+            <h3 class="text-xl font-semibold text-white">ROP</h3>
+            <p class="mt-4 text-white/72 leading-7">Coming soon!</p>
+          </article>
+          <article class="glass rounded-[1.75rem] p-7 reveal">
+            <h3 class="text-xl font-semibold text-white">Delegate handbook</h3>
+            <p class="mt-4 text-white/72 leading-7">Coming soon!</p>
+          </article>
+          <article class="glass rounded-[1.75rem] p-7 reveal">
+            <h3 class="text-xl font-semibold text-white">What to do in Warsaw?</h3>
+            <p class="mt-4 text-white/72 leading-7">As a capital city of Poland, Warsaw has rich history and modern life balanced together, due to cultural attractions, historic sites and an active urban atmosphere. Warsaw is well connected and easy to reach by international flights to Warsaw Chopin Airport or Modlin, or by direct rail connections with other European cities. Moving around Warsaw is simple and affordable with buses, trams and subway network, ensuring easy access to key locations, especially the JASMUN venue.</p>
+            <button class="read-more-btn" onclick="toggleCard(this)">
+              Read more <span class="arrow">▼</span>
+            </button>
+            <div class="card-detail">
+              <p class="mt-3 text-white/60 leading-7 text-sm">During free time, delegates are welcome and encouraged to explore many fascinating cultural and historical landmarks, as well as enjoy traditional or international cuisine.</p>
+              <ul class="mt-4 text-white/60 text-sm space-y-4">
+                <li><span class="text-white/85 font-semibold">Pałac Kultury</span> — Warsaw's tallest building and a symbol of the city with panoramic views, theaters, cinemas and exhibition halls.</li>
+                <li><span class="text-white/85 font-semibold">Old Town</span> — A historic UNESCO-listed centre of the city, reconstructed to reflect what Warsaw originally looked like.</li>
+                <li><span class="text-white/85 font-semibold">Royal Castle</span> — A former residence of past monarchs, now a museum with an extensive collection of Polish art.</li>
+                <li><span class="text-white/85 font-semibold">Łazienki Królewskie</span> — Warsaw's largest park with beautiful gardens, green walking paths, and the iconic Fryderyk Chopin statue and Palace on the Isle.</li>
+                <li><span class="text-white/85 font-semibold">Nowy Świat</span> — One of the most famous streets in Warsaw, known for its architecture, history, cafés, restaurants and shops.</li>
+                <li>
+                  <span class="text-white/85 font-semibold">Museums</span> — Warsaw has a wide range of museums exhibiting its history, culture and art:
+                  <ul class="mt-2 ml-4 space-y-1">
+                    <li>· POLIN Museum of the History of Polish Jews</li>
+                    <li>· Warsaw Uprising Museum</li>
+                    <li>· National Museum</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="previous-editions" class="py-20 sm:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-10 reveal">
+          <h2 class="mt-4 text-4xl sm:text-6xl font-bold text-white">Previous Editions</h2>
+        </div>
+
+        <!-- 2025 -->
+        <div class="mb-16 reveal">
+          <h3 class="text-2xl font-semibold text-white mb-6">JASMUN 2025</h3>
+          <div class="relative">
+            <div id="carousel-2025" class="flex gap-4 overflow-x-auto scroll-smooth pb-4" style="scrollbar-width:none;">
+              <img src="images/DSC_9128.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_9041.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_8976.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_8959.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_8676.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_8496.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_8232.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7873.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7828.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7670.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7635.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7609.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7575.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7531.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7517.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+              <img src="images/DSC_7574.JPG" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2025" />
+            </div>
+            <button onclick="document.getElementById('carousel-2025').scrollBy({left:-400,behavior:'smooth'})" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition flex items-center justify-center">‹</button>
+            <button onclick="document.getElementById('carousel-2025').scrollBy({left:400,behavior:'smooth'})" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition flex items-center justify-center">›</button>
+          </div>
+        </div>
+
+        <!-- 2024 -->
+        <div class="mb-16 reveal">
+          <h3 class="text-2xl font-semibold text-white mb-6">JASMUN 2024</h3>
+          <div class="relative">
+            <div id="carousel-2024" class="flex gap-4 overflow-x-auto scroll-smooth pb-4" style="scrollbar-width:none;">
+              <img src="images/IMG_2821.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2822.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2823.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2824.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2825.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2826.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2827.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2828.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2829.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2830.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2831.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+              <img src="images/IMG_2832.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2024" />
+            </div>
+            <button onclick="document.getElementById('carousel-2024').scrollBy({left:-400,behavior:'smooth'})" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition flex items-center justify-center">‹</button>
+            <button onclick="document.getElementById('carousel-2024').scrollBy({left:400,behavior:'smooth'})" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition flex items-center justify-center">›</button>
+          </div>
+        </div>
+
+        <!-- 2023 -->
+        <div class="reveal">
+          <h3 class="text-2xl font-semibold text-white mb-6">JASMUN 2023</h3>
+          <div class="relative">
+            <div id="carousel-2023" class="flex gap-4 overflow-x-auto scroll-smooth pb-4" style="scrollbar-width:none;">
+              <img src="images/IMG_2833.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2023" />
+              <img src="images/IMG_2834.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2023" />
+              <img src="images/IMG_2835.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2023" />
+              <img src="images/IMG_2836.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2023" />
+              <img src="images/IMG_2837.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2023" />
+              <img src="images/IMG_2838.jpg" class="h-72 w-auto rounded-2xl flex-shrink-0 object-cover" alt="JASMUN 2023" />
+            </div>
+            <button onclick="document.getElementById('carousel-2023').scrollBy({left:-400,behavior:'smooth'})" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition flex items-center justify-center">‹</button>
+            <button onclick="document.getElementById('carousel-2023').scrollBy({left:400,behavior:'smooth'})" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white/10 border border-white/20 text-white hover:bg-white/20 transition flex items-center justify-center">›</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" class="pt-8 pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="glass rounded-[2rem] p-8 sm:p-10 reveal">
+        <div class="grid md:grid-cols-3 gap-8">
+          <div>
+            <p class="text-sm uppercase tracking-[0.28em] text-fuchsia-200/80">JASMUN</p>
+            <h3 class="mt-4 text-2xl font-bold text-white">Contact</h3>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-white">Email</h4>
+            <p class="mt-4 text-white/72">jasmun.official@gmail.com</p>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold text-white">Socials</h4>
+            <p class="mt-4 text-white/72">
+              <a href="https://www.instagram.com/jasmun.official" class="underline" target="_blank">Instagram</a> ·
+              <a href="https://linktr.ee/JASMUN25" class="underline" target="_blank">Linktree</a> ·
+              <a href="https://www.facebook.com/jasmun.official" class="underline" target="_blank">Facebook</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('nav-scrolled', window.scrollY > 40);
+    });
+
+    
+    const menuButton = document.getElementById('menuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuButton.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+  
+    const target = new Date('2026-09-24T00:00:00').getTime();
+    function updateCountdown() {
+      const diff = target - Date.now();
+      if (diff <= 0) {
+        ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00');
+        return;
+      }
+      document.getElementById('cd-days').textContent  = String(Math.floor(diff / 86400000)).padStart(2,'0');
+      document.getElementById('cd-hours').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+      document.getElementById('cd-mins').textContent  = String(Math.floor((diff % 3600000) / 60000)).padStart(2,'0');
+      document.getElementById('cd-secs').textContent  = String(Math.floor((diff % 60000) / 1000)).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+ 
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function toggleCard(btn) {
+      const detail = btn.nextElementSibling;
+      const isOpen = detail.classList.toggle('open');
+      btn.classList.toggle('open', isOpen);
+      btn.innerHTML = isOpen
+        ? 'Read less <span class="arrow" style="display:inline-block;transition:transform 0.3s ease;transform:rotate(180deg);">▼</span>'
+        : 'Read more <span class="arrow" style="display:inline-block;transition:transform 0.3s ease;">▼</span>';
+    }
+  </script>
+</body>
+</html>
